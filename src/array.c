@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stddef.h> // for size_t
 #include <stdint.h> // for uint8_t
+#include <string.h>
 
 struct dynamic_array {
     void *data;     
@@ -16,7 +17,11 @@ static void *safe_malloc(size_t size);
 static void increase_capacity(dynamic_array_t da);
 static void ensure_valid_capacity(dynamic_array_t da);
 
-dynamic_array_t da_create(size_t element_size, int initial_capacity) {
+dynamic_array_t da_create(size_t element_size, size_t initial_capacity) {
+    if (initial_capacity <= 0) {
+        return NULL;
+    }
+
     struct dynamic_array *new_array = safe_malloc(sizeof(struct dynamic_array));
 
     new_array->element_size = element_size;
@@ -36,7 +41,6 @@ void da_destroy(dynamic_array_t da) {
     }
 }
 
-// adds an element to the end of the array, resizes if required
 void da_append(dynamic_array_t da, void *element) {
     // ensure a valid da is provided
     if (!da) {
@@ -46,32 +50,35 @@ void da_append(dynamic_array_t da, void *element) {
     ensure_valid_capacity(da);
     void *destination = (uint8_t *)da->data + (da->size * da->element_size);
     memcpy(destination, element, da->element_size);
+    da->size++;
 }
 
-void *da_view(dynamic_array_t da, int pos) {
+void *da_view(dynamic_array_t da, ptrdiff_t pos) {
     // ensure a valid da is provided
     if (!da) {
         return NULL;
     }
     
-    // exclude when we are out of bounds
-    if (pos + 1 > da->size || pos < - da->size) {
+    ptrdiff_t index = (pos >= 0) ? pos : ((ptrdiff_t)da->size + pos);
+
+    // check for out of bounds
+    if (index < 0 || index >= (ptrdiff_t)da->size) {
         return NULL;
     }
 
-    void *destination;
-    if (pos >= 0) {
-        destination = (uint8_t *)da->data + (pos * da->element_size);
-    } else {
-        pos *= -1;
-        void *last_elem = (uint8_t *)da->data + (da->size * da->element_size);
-        destination = last_elem - (pos * da->element_size);
-    }
-    return destination;
+    return (uint8_t *)da->data + (index * da->element_size);
 }
 
-
-
+/**
+ * @brief Allocates memory with failure checking
+ * 
+ * Attempts to allocate `size` bytes. If the allocation fails, prints error 
+ * message and terminates the program.
+ * 
+ * @param[in] size Number of bytes to allocate
+ * 
+ * @return A pointer to the allocated memory
+ */
 static void *safe_malloc(size_t size) {
     void *ptr = malloc(size);
     if (!ptr) {
@@ -81,26 +88,42 @@ static void *safe_malloc(size_t size) {
     return ptr;
 }
 
+/**
+ * @brief Doubles the capacity of the dynamic array
+ * 
+ * Reallocates the internal data of the array to twice its current capacity.
+ * 
+ * @param[in,out] da The dynamic array whose capacity will be increased. Must
+ * not be NULL.
+ */
 static void increase_capacity(dynamic_array_t da) {
     size_t new_capacity = da->capacity * 2;
+
 
     void *new_data = realloc(da->data, da->element_size * new_capacity);
     if (!new_data) {
 		fprintf(stderr, "error: out of memory\n");
 		exit(EXIT_FAILURE);
     }
-    
-    safe_malloc(new_capacity);
 
     da->data = new_data;
     da->capacity = new_capacity;
 }
 
-// checks the capacity when a new element is to be added
-// hence if there is n-1 / n filled, we are fine
-// but if we are at n/n then we will resize
+
+/**
+ * @brief Ensures the dynamic array has enough capacity for a new element
+ * 
+ * If there is not enough capacity for a new element, 
+ * calls `increase_capacity()` to double the capacity.abort
+ * 
+ * If there is 1 space left, a resize will not occur.
+ * 
+ * @param[in,out] da The dynamic array to check and possibly expand. 
+ * Must not be NULL.
+ */
 static void ensure_valid_capacity(dynamic_array_t da) {
-    if (da->data >= da->capacity) {
+    if (da->size >= da->capacity) {
         increase_capacity(da);
     }
 }
