@@ -17,4 +17,11 @@ dynamic_array_t da_create(size_t element_size, int initial_capacity);
 void da_destroy(dynamic_array_t da);
 void da_append(dynamic_array_t da, void *element);
 
+
+// choose the position of element to view, 0 indexed
+// if you come from the negative, its from the behind.
+// if you go out of bounds, NULL is returned
+void *da_view(dynamic_array_t da, int pos);
+
+
 #endif

@@ -29,19 +29,48 @@ dynamic_array_t da_create(size_t element_size, int initial_capacity) {
 }
 
 void da_destroy(dynamic_array_t da) {
+    // ensure a valid da is provided
     if (da) {
         free(da->data);
         free(da);
     }
-
 }
 
 // adds an element to the end of the array, resizes if required
 void da_append(dynamic_array_t da, void *element) {
+    // ensure a valid da is provided
+    if (!da) {
+        return;
+    }
+
     ensure_valid_capacity(da);
     void *destination = (uint8_t *)da->data + (da->size * da->element_size);
     memcpy(destination, element, da->element_size);
 }
+
+void *da_view(dynamic_array_t da, int pos) {
+    // ensure a valid da is provided
+    if (!da) {
+        return NULL;
+    }
+    
+    // exclude when we are out of bounds
+    if (pos + 1 > da->size || pos < - da->size) {
+        return NULL;
+    }
+
+    void *destination;
+    if (pos >= 0) {
+        destination = (uint8_t *)da->data + (pos * da->element_size);
+    } else {
+        pos *= -1;
+        void *last_elem = (uint8_t *)da->data + (da->size * da->element_size);
+        destination = last_elem - (pos * da->element_size);
+    }
+    return destination;
+}
+
+
 
 static void *safe_malloc(size_t size) {
     void *ptr = malloc(size);
