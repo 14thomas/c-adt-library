@@ -67,5 +67,14 @@ void da_append(dynamic_array_t da, void *element);
  */
 void *da_get(dynamic_array_t da, ptrdiff_t pos);
 
+/**
+ * @brief Returns the amount of elements stored in the array
+ * 
+ * @param[in] da A dynamic array
+ * 
+ * @return The amount of elements stored in the array. If NULL is passed in,
+ * then returns 0.
+ */
+size_t da_size(dynamic_array_t da);
 
 #endif

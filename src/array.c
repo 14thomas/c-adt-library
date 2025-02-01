@@ -69,6 +69,15 @@ void *da_get(dynamic_array_t da, ptrdiff_t pos) {
     return (uint8_t *)da->data + (index * da->element_size);
 }
 
+size_t da_size(dynamic_array_t da) {
+    if (!da) {
+        return 0;
+    }
+    return da->size;
+}
+
+
+
 /**
  * @brief Allocates memory with failure checking
  * 

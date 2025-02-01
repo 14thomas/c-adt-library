@@ -7,11 +7,11 @@ This document provides a detailed reference for all functions available in the *
 ## 1️⃣ Creation and Destruction
 
 ### 🔹 Initialization  
-- `da_create(size_t element_size, size_t initial_capacity)`:  
+- `dynamic_array_t da_create(size_t element_size, size_t initial_capacity)`:  
   _Creates a new dynamic array with an initial capacity._  
 
 ### 🔹 Cleanup  
-- `da_destroy(dynamic_array_t* da)`:  
+- `void da_destroy(dynamic_array_t* da)`:  
   _Frees allocated memory and cleans up resources._  
 - `da_clear(dynamic_array_t* da)`:  
   _Removes all elements but retains allocated memory for reuse._ _(Coming Soon) 🚀_ 
@@ -21,7 +21,7 @@ This document provides a detailed reference for all functions available in the *
 ## 2️⃣ Insertion Operations
 
 ### 🔹 Appending and Prepending  
-- `da_append(dynamic_array_t* da, void* element)`:  
+- `void da_append(dynamic_array_t* da, void* element)`:  
   _Adds an item to the end of the array._  
 - `da_prepend(dynamic_array_t* da, void* element)`:  
   _Adds an item to the beginning of the array._ _(Coming Soon) 🚀_
@@ -59,7 +59,7 @@ This document provides a detailed reference for all functions available in the *
 ## 4️⃣ Element Access and Modification  
 
 ### 🔹 Direct Access  
-- `da_get(dynamic_array_t* da, size_t index)`:  
+- `void *da_get(dynamic_array_t* da, size_t index)`:  
   _Retrieves the element at a specified index._ _(Coming Soon) 🚀_  
 - `da_set(dynamic_array_t* da, size_t index, void* element)`:  
   _Replaces the element at a specified index._ _(Coming Soon) 🚀_  
@@ -85,8 +85,8 @@ This document provides a detailed reference for all functions available in the *
 ## 5️⃣ Capacity and Size Management  
 
 ### 🔹 Size and Capacity Queries  
-- `da_size(dynamic_array_t* da)`:  
-  _Returns the number of elements currently stored._ _(Coming Soon) 🚀_  
+- `size_t da_size(dynamic_array_t* da)`:  
+  _Returns the number of elements currently stored._ 
 - `da_capacity(dynamic_array_t* da)`:  
   _Returns the current allocated capacity._ _(Coming Soon) 🚀_  
 - `da_is_empty(dynamic_array_t* da)`:  
