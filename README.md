@@ -24,6 +24,11 @@ Each ADT is implemented as a modular, standalone component with a clear and intu
 
 Stay tuned for updates as new ADTs roll out! 🚧  
 
+## 📖 Documentation  
+
+- [Dynamic Array Function Reference](docs/dynamic_array.md) 📂  
+- [Installation Guide](docs/installation.md) _(Coming Soon)_  
+
 ---
   
 💬 **Feedback? Ideas?** Hit me up—contributions and suggestions are always welcome!  
