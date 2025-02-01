@@ -77,4 +77,15 @@ void *da_get(dynamic_array_t da, ptrdiff_t pos);
  */
 size_t da_size(dynamic_array_t da);
 
+/**
+ * @brief Returns a boolean indicating whether the array is empty
+ * 
+ * @param[in] da A dynamic array
+ * 
+ * @return true if the array is empty, false otherwise. Also returns true
+ * if NULL is passed in.
+ */
+bool da_is_empty(dynamic_array_t da);
+
+
 #endif

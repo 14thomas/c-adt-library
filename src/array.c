@@ -2,7 +2,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <stddef.h> // for size_t
 #include <stdint.h> // for uint8_t
 #include <string.h>
 
@@ -76,6 +75,9 @@ size_t da_size(dynamic_array_t da) {
     return da->size;
 }
 
+bool da_is_empty(dynamic_array_t da) {
+    return !da || da->size == 0;
+}
 
 
 /**
