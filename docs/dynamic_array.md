@@ -4,18 +4,6 @@ This document provides a detailed reference for all functions available in the *
 
 ---
 
-## 📌 Data Types Used
-
-| Type                 | Description |
-|----------------------|-------------|
-| `size_t`            | Unsigned integer type, typically used for sizes and indices. |
-| `dynamic_array_t`   | The struct representing a dynamic array (defined in `adt_array.h`). |
-| `void*`             | Generic pointer type for handling any data type. |
-
-_(Check `adt_array.h` for exact type definitions.)_
-
----
-
 ## 1️⃣ Creation and Destruction
 
 ### 🔹 Initialization  
@@ -136,4 +124,3 @@ _(Check `adt_array.h` for exact type definitions.)_
 - `da_swap(dynamic_array_t* da, size_t index1, size_t index2)`:  
   _Swaps two elements at the specified indices._ _(Coming Soon) 🚀_
 
----
