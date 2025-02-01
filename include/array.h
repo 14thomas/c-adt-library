@@ -65,7 +65,7 @@ void da_append(dynamic_array_t da, void *element);
  * @return A pointer to the element at the specified position, or `NULL` if 
  * `pos` is out of bounds or if `da` is invalid.
  */
-void *da_view(dynamic_array_t da, ptrdiff_t pos);
+void *da_get(dynamic_array_t da, ptrdiff_t pos);
 
 
 #endif

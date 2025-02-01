@@ -53,7 +53,7 @@ void da_append(dynamic_array_t da, void *element) {
     da->size++;
 }
 
-void *da_view(dynamic_array_t da, ptrdiff_t pos) {
+void *da_get(dynamic_array_t da, ptrdiff_t pos) {
     // ensure a valid da is provided
     if (!da) {
         return NULL;
@@ -109,7 +109,6 @@ static void increase_capacity(dynamic_array_t da) {
     da->data = new_data;
     da->capacity = new_capacity;
 }
-
 
 /**
  * @brief Ensures the dynamic array has enough capacity for a new element
