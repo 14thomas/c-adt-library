@@ -76,7 +76,25 @@ void da_prepend(dynamic_array_t da, void *element);
 void da_insert(dynamic_array_t da, size_t index, void *element);
 
 /**
+ * @brief Removes and returns the last element
+ * 
+ * The function removes the last element from the dynamic array and returns
+ * a pointer to a copy of that element. The copy is on the heap, and must
+ * be freed when by the caller.
+ * 
+ * @param[in,out] da A dynamic array. If NULL is passed in, NULL returned
+ * 
+ * @returns A pointer to the element at last position. NULL returned if NULL
+ * is passed in
+ */
+void *da_pop(dynamic_array_t da);
+
+/**
  * @brief Returns a pointer to the element at a given position in the array
+ * 
+ * This function allocates memory for a new copy of the element at position.
+ * This ensures that if the element is later modified / removed from array, 
+ * the copy remains valid. Ensure the memory is freed when not in use.
  * 
  * The position `index` may be:
  * 
@@ -89,7 +107,7 @@ void da_insert(dynamic_array_t da, size_t index, void *element);
  * the end
  * 
  * @return A pointer to the element at the specified position, or `NULL` if 
- * `pos` is out of bounds or if `da` is invalid.
+ * `pos` is out of bounds or if `da` is invalid. This 
  */
 void *da_get(dynamic_array_t da, ptrdiff_t index);
 

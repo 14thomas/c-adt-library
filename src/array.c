@@ -61,6 +61,20 @@ void da_prepend(dynamic_array_t da, void *element) {
     da_insert(da, 0, element);
 }
 
+void *da_pop(dynamic_array_t da) {
+    if (!da || da->size == 0) {
+        return NULL; 
+    }
+
+    void *last = (uint8_t *)da->data + (da->size - 1) * da->element_size;
+    
+    // Allocate memory for the element to return
+    void *element = safe_malloc(da->element_size);
+    memcpy(element, last, da->element_size);
+    da->size--;
+
+    return element; // Return the popped element
+}
 
 void da_insert(dynamic_array_t da, size_t index, void *element) {
     // ensure a valid da is provided
@@ -76,19 +90,21 @@ void da_insert(dynamic_array_t da, size_t index, void *element) {
 }
 
 void *da_get(dynamic_array_t da, ptrdiff_t index) {
-    // ensure a valid da is provided
     if (!da) {
         return NULL;
     }
     
     ptrdiff_t pos = (index >= 0) ? index : ((ptrdiff_t)da->size + index);
-
-    // check for out of bounds
-    if (index < 0 || index >= (ptrdiff_t)da->size) {
+    
+    if (pos < 0 || pos >= (ptrdiff_t)da->size) {
         return NULL;
     }
-
-    return (uint8_t *)da->data + (pos * da->element_size);
+    
+    void *element_copy = safe_malloc(da->element_size);
+    
+    memcpy(element_copy, (uint8_t *)da->data + (pos * da->element_size), da->element_size);
+    
+    return element_copy;
 }
 
 size_t da_size(dynamic_array_t da) {
