@@ -50,22 +50,34 @@ void da_destroy(dynamic_array_t da);
 void da_append(dynamic_array_t da, void *element);
 
 /**
+ * @brief Inserts an element at a specific position, shifting subsequent
+ * elements
+ * 
+ * @param[in,out] da A dynamic array. If NULL is passed in, nothing occurs
+ * @param[in] index The index of where the new element is positioned
+ * @param[in] element A pointer to the new element
+ * 
+ * @returns This function does not return anything 
+ */
+void da_insert(dynamic_array_t da, size_t index, void *element);
+
+/**
  * @brief Returns a pointer to the element at a given position in the array
  * 
- * The position `pos` may be:
+ * The position `index` may be:
  * 
  * - A non-negative index (0-based from front)
  * 
  * - Negative index (from the back, -1 refers to last element)
  * 
  * @param[in] da A dynamic array
- * @param[in] pos The position of the element. Negative value counts from
+ * @param[in] index The index of the element. Negative value counts from
  * the end
  * 
  * @return A pointer to the element at the specified position, or `NULL` if 
  * `pos` is out of bounds or if `da` is invalid.
  */
-void *da_get(dynamic_array_t da, ptrdiff_t pos);
+void *da_get(dynamic_array_t da, ptrdiff_t index);
 
 /**
  * @brief Returns the amount of elements stored in the array

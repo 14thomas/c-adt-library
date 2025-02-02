@@ -27,8 +27,8 @@ This document provides a detailed reference for all functions available in the *
   _Adds an item to the beginning of the array._ _(Coming Soon) 🚀_
 
 ### 🔹 Inserting at Specific Positions  
-- `da_insert(dynamic_array_t *da, size_t index, void *element)`:  
-  _Inserts an element at a specific position, shifting subsequent elements._ _(Coming Soon) 🚀_ 
+- `void da_insert(dynamic_array_t da, size_t index, void *element)`:  
+  _Inserts an element at a specific position, shifting subsequent elements._ 
 - `da_insert_multiple(dynamic_array_t *da, size_t index, void *elements, size_t count)`:  
   _Inserts multiple elements starting at a given index._ _(Coming Soon) 🚀_
 

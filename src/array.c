@@ -15,13 +15,14 @@ struct dynamic_array {
 static void *safe_malloc(size_t size);
 static void increase_capacity(dynamic_array_t da);
 static void ensure_valid_capacity(dynamic_array_t da);
+static void recursive_shift_down(dynamic_array_t da, size_t index, void *element_to_move);
 
 dynamic_array_t da_create(size_t element_size, size_t initial_capacity) {
     if (initial_capacity <= 0) {
         return NULL;
     }
 
-    struct dynamic_array *new_array = safe_malloc(sizeof(struct dynamic_array));
+    dynamic_array_t new_array = safe_malloc(sizeof(struct dynamic_array));
 
     new_array->element_size = element_size;
     new_array->size = 0;
@@ -52,20 +53,33 @@ void da_append(dynamic_array_t da, void *element) {
     da->size++;
 }
 
-void *da_get(dynamic_array_t da, ptrdiff_t pos) {
+void da_insert(dynamic_array_t da, size_t index, void *element) {
+    // ensure a valid da is provided
+    if (!da) {
+        return;
+    }
+    ensure_valid_capacity(da);
+    recursive_shift_down(da, index, da_get(da, index));
+
+    void *destination = (uint8_t *)da->data + (index * da->element_size);
+    memcpy(destination, element, da->element_size);
+    da->size++;
+}
+
+void *da_get(dynamic_array_t da, ptrdiff_t index) {
     // ensure a valid da is provided
     if (!da) {
         return NULL;
     }
     
-    ptrdiff_t index = (pos >= 0) ? pos : ((ptrdiff_t)da->size + pos);
+    ptrdiff_t pos = (index >= 0) ? index : ((ptrdiff_t)da->size + index);
 
     // check for out of bounds
     if (index < 0 || index >= (ptrdiff_t)da->size) {
         return NULL;
     }
 
-    return (uint8_t *)da->data + (index * da->element_size);
+    return (uint8_t *)da->data + (pos * da->element_size);
 }
 
 size_t da_size(dynamic_array_t da) {
@@ -78,7 +92,6 @@ size_t da_size(dynamic_array_t da) {
 bool da_is_empty(dynamic_array_t da) {
     return !da || da->size == 0;
 }
-
 
 /**
  * @brief Allocates memory with failure checking
@@ -136,4 +149,31 @@ static void ensure_valid_capacity(dynamic_array_t da) {
     if (da->size >= da->capacity) {
         increase_capacity(da);
     }
+}
+
+/**
+ * @brief Shifts down the position of each element starting from `index`
+ * 
+ * `element_to_move` should be the element at `index` position.
+ * 
+ * @param[out] da The dynamic array for which elements are shifted
+ * @param[in] index The position for which the shifting shall start from
+ * @param[in,out] element_to_move The element currently at `index`, which
+ * shall be moved to the right
+ * 
+ */
+static void recursive_shift_down(dynamic_array_t da, size_t index, void *element_to_move) {
+    if (index >= da->size) {
+        void *last_index = (uint8_t *)da->data + (index * da->element_size);
+        memcpy(last_index, element_to_move, da->element_size);
+        return;
+    }
+
+    void *curr_index = (uint8_t *)da->data + (index * da->element_size);
+
+    uint8_t temp[da->element_size];
+    memcpy(temp, curr_index, da->element_size);
+    memcpy(curr_index, element_to_move, da->element_size);
+
+    recursive_shift_down(da, index + 1, temp);
 }
