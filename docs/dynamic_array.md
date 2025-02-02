@@ -96,7 +96,7 @@ This document provides a detailed reference for all functions available in the *
 - `int da_reserve(dynamic_array_t da, size_t min_capacity)`:  
   _Ensures that the array has at least a certain capacity to minimise reallocations._
 - `void da_shrink_to_fit(dynamic_array_t da)`:  
-  _Reduces allocated capacity to match the current size._ _(Coming Soon) 🚀_
+  _Reduces allocated capacity to match the current size._ 
 
 ---
 
