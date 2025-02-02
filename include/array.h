@@ -158,6 +158,15 @@ void *da_get(dynamic_array_t da, ptrdiff_t index);
 size_t da_size(dynamic_array_t da);
 
 /**
+ * @brief Returns the current allocated capacity of the array
+ * 
+ * @param[in] da A dynamic array
+ * 
+ * @return The capacaity of the dynamic array. 0 if NULL is passed in.
+ */
+size_t da_capacity(dynamic_array_t da);
+
+/**
  * @brief Returns a boolean indicating whether the array is empty
  * 
  * @param[in] da A dynamic array
@@ -166,5 +175,29 @@ size_t da_size(dynamic_array_t da);
  * if NULL is passed in.
  */
 bool da_is_empty(dynamic_array_t da);
+
+/**
+ * @brief Ensures the array has a minimum capacity to minimise reallocations
+ * 
+ * Allocates memory such that `min_capacity` items can fit in the array
+ * without reallocating.
+ * 
+ * @param[in,out] da A dynamic array
+ * @param[in] min_capacity The new minimum capacity for the array. This number should be greater than 1. This number
+ * should be also higher than the current capacity of the array. If this number is less than
+ * or equal, nothing occurs. 
+ * 
+ * @return 0 if successful, 1 else. Returns 1 if `min_capacity <= current capacity`
+ */
+int da_reserve(dynamic_array_t da, size_t min_capacity);
+
+/**
+ * @brief Reduces allocated capacity to match the current size
+ * 
+ * @param[in,out] da A dynamic array
+ * 
+ * @return This function does not return anything
+ */
+void da_shrink_to_fit(dynamic_array_t da);
 
 #endif

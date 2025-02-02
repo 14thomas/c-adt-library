@@ -137,8 +137,30 @@ size_t da_size(dynamic_array_t da) {
     return da->size;
 }
 
+size_t da_capacity(dynamic_array_t da) {
+    if (!da) {
+        return 0;
+    }
+    return da->capacity;
+}
+
 bool da_is_empty(dynamic_array_t da) {
     return !da || da->size == 0;
+}
+
+int da_reserve(dynamic_array_t da, size_t min_capacity) {
+    if (min_capacity <= da->capacity || min_capacity <= 1) {
+        return 1;
+    } 
+    reallocate_memory(da, min_capacity);
+    return 0;
+}
+
+void da_shrink_to_fit(dynamic_array_t da) {
+    if (da->capacity == da->size) {
+        return;
+    }
+    reallocate_memory(da, da->size);
 }
 
 /**
@@ -277,4 +299,24 @@ static void recursive_shift_up(dynamic_array_t da, size_t hole_index, size_t cur
 
     recursive_shift_up(da, hole_index, curr_index - 1, temp);
     free(temp);
+}
+
+/**
+ * @brief Reallocates the array to length of `size`
+ * 
+ * Error checking should be done prior to calling this function
+ * 
+ * @param[in,out] da The array to be reallocated
+ * @param[in] size The new size of the array
+ * 
+ * @return This function does not return anything
+ */
+static void reallocate_memory(dynamic_array_t da, size_t size) {
+    void *new_data = realloc(da->data, da->element_size * size);
+    if (!new_data) {
+		fprintf(stderr, "error: out of memory\n");
+		exit(EXIT_FAILURE);
+    }    
+    da->data = new_data;
+    da->capacity = size;
 }
