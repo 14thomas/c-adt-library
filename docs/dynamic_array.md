@@ -37,13 +37,13 @@ This document provides a detailed reference for all functions available in the *
 ## 3️⃣ Deletion and Removal Operations  
 
 ### 🔹 Removing from Ends  
-- `da_pop(dynamic_array_t da)`:  
+- `void *da_pop(dynamic_array_t da)`:  
   _Removes and returns the last element._ 
-- `da_pop_front(dynamic_array_t da)`:  
-  _Removes and returns the first element._ _(Coming Soon) 🚀_
+- `void *da_pop_front(dynamic_array_t da)`:  
+  _Removes and returns the first element._
 
 ### 🔹 Removing from Specific Positions  
-- `da_remove_at(dynamic_array_t da, size_t index)`:  
+- `void *da_remove_at(dynamic_array_t da, ptrdiff_t index)`:  
   _Removes the element at a given index._ _(Coming Soon) 🚀_ 
 - `da_remove_range(dynamic_array_t da, size_t start_index, size_t count)`:  
   _Removes a range of elements starting at a specified index._ _(Coming Soon) 🚀_

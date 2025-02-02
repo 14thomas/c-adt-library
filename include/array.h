@@ -90,6 +90,42 @@ void da_insert(dynamic_array_t da, size_t index, void *element);
 void *da_pop(dynamic_array_t da);
 
 /**
+ * @brief Removes and returns the first element
+ * 
+ * The function removes the first element from the dynamic array and returns
+ * a pointer to a copy of that element. The copy is on the heap, and must
+ * be freed when by the caller.
+ * 
+ * @param[in,out] da A dynamic array. If NULL is passed in, NULL returned
+ * 
+ * @returns A pointer to the element at first position. NULL returned if NULL
+ * is passed in
+ */
+void *da_pop_front(dynamic_array_t da);
+
+/**
+ * @brief Removes and returns the element at a given position in the array
+ * 
+ * The function removes an element from the dynamic array and returns
+ * a pointer to a copy of that element. The copy is on the heap, and must
+ * be freed when by the caller.
+ * 
+ *  The position `index` may be:
+ * 
+ * - A non-negative index (0-based from front)
+ * 
+ * - Negative index (from the back, -1 refers to last element)
+ * 
+ * @param[in,out] da A dynamic array. If NULL is passed in, NULL returned
+ * @param[in] index The index of the element. Negative value counts from
+ * the end.
+ * 
+ * @returns A pointer to the element at the specified position, or `NULL` if 
+ * `pos` is out of bounds or if `da` is NULL.
+ */
+void *da_remove_at(dynamic_array_t da, ptrdiff_t index);
+
+/**
  * @brief Returns a pointer to the element at a given position in the array
  * 
  * This function allocates memory for a new copy of the element at position.
@@ -107,7 +143,7 @@ void *da_pop(dynamic_array_t da);
  * the end
  * 
  * @return A pointer to the element at the specified position, or `NULL` if 
- * `pos` is out of bounds or if `da` is invalid. This 
+ * `pos` is out of bounds or if `da` is invalid. 
  */
 void *da_get(dynamic_array_t da, ptrdiff_t index);
 
@@ -130,6 +166,5 @@ size_t da_size(dynamic_array_t da);
  * if NULL is passed in.
  */
 bool da_is_empty(dynamic_array_t da);
-
 
 #endif
