@@ -23,8 +23,8 @@ This document provides a detailed reference for all functions available in the *
 ### 🔹 Appending and Prepending  
 - `void da_append(dynamic_array_t *da, void *element)`:  
   _Adds an item to the end of the array._  
-- `da_prepend(dynamic_array_t *da, void *element)`:  
-  _Adds an item to the beginning of the array._ _(Coming Soon) 🚀_
+- `void da_prepend(dynamic_array_t da, void *element)`:  
+  _Adds an item to the beginning of the array._ 
 
 ### 🔹 Inserting at Specific Positions  
 - `void da_insert(dynamic_array_t da, size_t index, void *element)`:  

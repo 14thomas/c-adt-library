@@ -53,6 +53,15 @@ void da_append(dynamic_array_t da, void *element) {
     da->size++;
 }
 
+void da_prepend(dynamic_array_t da, void *element) {
+    // ensure a valid da is provided
+    if (!da) {
+        return;
+    }
+    da_insert(da, 0, element);
+}
+
+
 void da_insert(dynamic_array_t da, size_t index, void *element) {
     // ensure a valid da is provided
     if (!da) {

@@ -49,6 +49,20 @@ void da_destroy(dynamic_array_t da);
  */
 void da_append(dynamic_array_t da, void *element);
 
+/** 
+ * @brief Appends an element to the front of the array
+ * 
+ * Appends a copy of the data pointed to by `element` to the front the array.
+ * If the array is at capacity, its storage will be automatically resized.
+ * 
+ * @param[out] da A dynamic array
+ * @param[in] element A pointer to the data to be appended. This function 
+ * copies exactly `element_size` bytes from this pointer into the array.
+ * 
+ * @return This function does not return anything
+ */
+void da_prepend(dynamic_array_t da, void *element);
+
 /**
  * @brief Inserts an element at a specific position, shifting subsequent
  * elements
