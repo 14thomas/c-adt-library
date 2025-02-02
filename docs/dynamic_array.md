@@ -44,7 +44,7 @@ This document provides a detailed reference for all functions available in the *
 
 ### 🔹 Removing from Specific Positions  
 - `void *da_remove_at(dynamic_array_t da, ptrdiff_t index)`:  
-  _Removes the element at a given index._ _(Coming Soon) 🚀_ 
+  _Removes the element at a given index._ 
 - `da_remove_range(dynamic_array_t da, size_t start_index, size_t count)`:  
   _Removes a range of elements starting at a specified index._ _(Coming Soon) 🚀_
 
