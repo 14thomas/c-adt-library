@@ -63,14 +63,10 @@ This document provides a detailed reference for all functions available in the *
   _Retrieves the element at a specified index._ 
 - `da_set(dynamic_array_t da, size_t index, void *element)`:  
   _Replaces the element at a specified index._ _(Coming Soon) 🚀_  
-
-### 🔹 Convenience Accessors  
 - `da_front(dynamic_array_t da)`:  
   _Returns the first element._ _(Coming Soon) 🚀_
 - `da_back(dynamic_array_t da)`:  
   _Returns the last element._ _(Coming Soon) 🚀_
-- `da_at(dynamic_array_t da, size_t index)`:  
-  _Retrieves the element at an index with bounds checking._ _(Coming Soon) 🚀_ 
 
 ### 🔹 Search Functions  
 - `da_index_of(dynamic_array_t da, void *element)`:  
