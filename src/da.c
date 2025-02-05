@@ -194,16 +194,7 @@ static void *safe_malloc(size_t size) {
  */
 static void increase_capacity(dynamic_array_t da) {
     size_t new_capacity = da->capacity * 2;
-
-
-    void *new_data = realloc(da->data, da->element_size * new_capacity);
-    if (!new_data) {
-		fprintf(stderr, "error: out of memory\n");
-		exit(EXIT_FAILURE);
-    }
-
-    da->data = new_data;
-    da->capacity = new_capacity;
+    reallocate_memory(da, new_capacity);
 }
 
 /**
